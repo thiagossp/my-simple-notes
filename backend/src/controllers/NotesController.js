@@ -30,5 +30,23 @@ module.exports = {
         });
 
         return response.status(200).json({success: `Note ${id} created successfully`});
+    },
+
+    async delete (request, response) {
+        const { id } = request.params;
+        const user = request.headers.authorization;
+
+        const note = await dbConnection('notes')
+            .where('id', id)
+            .select('user_login')
+            .first();
+
+        if (note.user_login ==! user) {
+            return response.status(401).json({ error: 'Operation not permitted'});
+        }
+
+        await dbConnection('notes').where('id', id).delete();
+
+        return response.status(204).send();
     }
 }
