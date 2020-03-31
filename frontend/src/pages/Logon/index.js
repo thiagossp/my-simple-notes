@@ -10,16 +10,16 @@ import logoImg from '../../assets/logo.svg';
 export default function Logon () {
     return (
         <div className='logon-container'>
-            <img src={ coverImg } alt='Capa' />
+            <img src={coverImg} alt='Capa' />
 
             <section className='form'>
-                <img src={ logoImg } alt='My Simple Notes' />
+                <img src={logoImg} alt='My Simple Notes' />
                 <form>
                     <input placeholder='Usuário' />
                     <input placeHolder='Senha' />
                     <button className='button' type='submit'>Entrar</button>
 
-                    <Link className='back-link'>
+                    <Link className='back-link' to='/register'>
                         <FiLogIn size={16} color="#00A82D" />
                         Novo Usuário
                     </Link>
