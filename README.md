@@ -1,1 +1,1 @@
-![My Simple Notes]()
+![My Simple Notes](https://github.com/thiagossp/my-simple-notes/blob/master/project/Images/capa-git.png?raw=true)
