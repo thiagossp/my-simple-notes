@@ -10,21 +10,23 @@ import coverImg from '../../assets/cover.png'
 import logoImg from '../../assets/logo.svg';
 
 export default function Logon () {
-    const [login, setLogin] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
 
-    async function handleLogin(e) {
+    async function handleemail(e) {
         e.preventDefault()
 
         const data = ({
-            login,
+            email,
             password,
         });
         
         try {
-            await api.post('sessions', data);
-            localStorage.setItem('login', login);
+            const result = await api.post('sessions', data);
+            console.log(result.data);
+            localStorage.setItem('id', result.data.id);
+            localStorage.setItem('email', result.data.email);
             history.push('client');
         } catch (error) {
             alert('Falha no login, tente novamente.')
@@ -37,11 +39,11 @@ export default function Logon () {
 
             <section className='form'>
                 <img src={logoImg} alt='My Simple Notes' />
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleemail}>
                     <input 
                         placeholder='Usuário'
-                        value={login}
-                        onChange={e => setLogin(e.target.value)}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                     <input 
                         type='password'

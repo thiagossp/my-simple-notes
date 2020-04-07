@@ -5,8 +5,8 @@ exports.up = function(knex) {
         table.string('body').notNullable();
         table.datetime('datetime').notNullable();
 
-        table.string('user_login').notNullable();
-        table.foreign('user_login').references('login').inTable('users');
+        table.string('user_id').notNullable();
+        table.foreign('user_id').references('id').inTable('users');
     });    
 };
 

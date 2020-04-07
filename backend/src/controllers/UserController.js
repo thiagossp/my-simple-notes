@@ -1,31 +1,38 @@
-const dbConnection = require('../database/dbConnection')
+const dbConnection = require('../database/dbConnection');
 const cryptoPassword = require('../utils/cryptoPassword');
+const  { v4:uuidv4 } = require('uuid');
 
 module.exports = {
-
+    
     async create(request, response) {
-        const { login, password } = request.body;
+        const { email, password } = request.body;
 
-        const loginNotAvailable = await dbConnection('users').select('login').where('login', login).first();
+        const emailNotAvailable = await dbConnection('users').select('email').where('email', email).first();
 
-        if (loginNotAvailable) {
-            return response.status(400).json({error: 'Login name is not available'});
+        if (emailNotAvailable) {
+            return response.status(400).json({error: 'This email is already in use'});
         }
 
-        const securePassword = await cryptoPassword(password, login);
+        const securePassword = await cryptoPassword(password, email);
+        const id = uuidv4();
 
         await dbConnection('users').insert({
-            login,
+            id,
+            email,
             password:securePassword,
         });
 
-        return response.status(200).json({success: 'User created successfully'});
+        return response.status(200).json({
+            'message': 'User created successfully',
+            'id': id,
+            'email': email
+        });
     },
 
     async index(request, response) {
-        const { login } = request.body;
-        if (login) {
-            const users = await (await dbConnection('users').where('login', login).select('login').first());
+        const { email } = request.body;
+        if (email) {
+            const users = await (await dbConnection('users').where('email', email).select('id','email').first());
             return response.json(users);
         }
         const users = await dbConnection('users');

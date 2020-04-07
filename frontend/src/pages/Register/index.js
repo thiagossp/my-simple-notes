@@ -31,7 +31,7 @@ export default function Register() {
     
     async function onSubmit(data) {
         const dataSend = {
-            login: data.login,
+            email: data.email,
             password: data.password
         }
 
@@ -58,7 +58,7 @@ export default function Register() {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input 
-                        name='login'
+                        name='email'
                         type='email'
                         placeholder='E-mail'
                         ref={register({

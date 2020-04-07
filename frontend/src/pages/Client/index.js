@@ -11,23 +11,24 @@ export default function Client () {
     const [notes, setNotes] = useState([]);
     const history = useHistory();
 
-    const login = localStorage.getItem('login');
+    const id = localStorage.getItem('id');
+    const email = localStorage.getItem('email');
 
     useEffect(() => {
         api.get('notes', {
             headers: {
-                authorization: login,
+                authorization: id,
             }
         }).then(response => {
             setNotes(response.data)
         })
-    }, [login]);
+    }, [id]);
 
     async function handleDeleteNote(id) {
         try {
             await api.delete(`notes/${id}`, {
                 header: {
-                    authorization: login
+                    authorization: id
                 }
             });
             setNotes(notes.filter(note => note.id !== id));
@@ -45,7 +46,7 @@ export default function Client () {
         <div className='client-container'>
             <header>
                 <img src={logoImg} alt='My Simple Notes' />
-                <span>Seja bem vindo(a), {login}</span>
+                <span>Seja bem vindo(a), {email}</span>
                 <Link className='button' to='/notes/new'>Nova nota</Link>
                 <button type='button' onClick={handleLogout}>
                     <FiPower size={18} color='#E02041' />

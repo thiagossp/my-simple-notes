@@ -1,13 +1,13 @@
 const dbConnection = require('../database/dbConnection');
-const generateUniqueId = require('../utils/generateUniqueId');
+const  { v4:uuidv4 } = require('uuid');
 
 module.exports = {
 
     async index (request,response) {
 
-        const user_login = request.headers.authorization;
+        const user_id = request.headers.authorization;
         const notes = await dbConnection('notes')
-            .where('user_login', user_login)
+            .where('user_id', user_id)
             .select('*');
         
         return response.json(notes);
@@ -16,17 +16,17 @@ module.exports = {
     async create (request,response) {
         const { name, body } = request.body;
 
-        const user_login = request.headers.authorization;
+        const user_id = request.headers.authorization;
 
         const datetime = Date.now()
-        const id = generateUniqueId();
+        const id = uuidv4();
 
         await dbConnection ('notes').insert({
             id,
             name,
             body,
             datetime,
-            user_login,
+            user_id,
         });
 
         return response.status(200).json({success: `Note ${id} created successfully`});
@@ -38,10 +38,10 @@ module.exports = {
 
         const note = await dbConnection('notes')
             .where('id', id)
-            .select('user_login')
+            .select('user_id')
             .first();
 
-        if (note.user_login ==! user) {
+        if (note.user_id ==! user) {
             return response.status(401).json({ error: 'Operation not permitted'});
         }
 

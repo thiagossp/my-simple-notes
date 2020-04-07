@@ -10,7 +10,7 @@ export default function NewNote () {
     const [name, setName] = useState('');
     const [body, setBody] = useState('');
     
-    const login = localStorage.getItem('login');
+    const id = localStorage.getItem('id');
     const history = useHistory();
 
     async function handleNewNote(e) {
@@ -24,7 +24,7 @@ export default function NewNote () {
         try {
             await api.post('notes', data, {
                 headers: {
-                    authorization: login,
+                    authorization: id,
                 }
             });
             history.push('/client');
