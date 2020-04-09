@@ -75,14 +75,15 @@
     margin-bottom: 8px;
     color: #41414d;
 }
+
  
-.client-container ul li p {
+.client-container ul li pre {
     color: #737380;
     line-height: 21px;
     font-size: 16px;
 }
 
-.client-container ul li p+p {
+.client-container ul li p {
     color: #737380;
     font-size: 10px;
     text-align: right;

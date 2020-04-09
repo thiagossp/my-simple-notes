@@ -58,7 +58,7 @@ export default function Client () {
                 {notes.map(note => (
                     <li key={note.id}>
                         <strong>{note.name}</strong>
-                        <p>{note.body}</p>
+                        <pre>{note.body}</pre>
                         <p>{
                             Intl.DateTimeFormat('pt-BR', {
                                 weekday: 'long',
